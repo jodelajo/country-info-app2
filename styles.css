@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -7,9 +9,46 @@ main {
     background-color: lightpink;
     padding: 100px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /*justify-content: center;*/
     align-items: center;
-    gap: 20px;
     max-width: 100%;
-    height: auto;
+    height: 100vh;
+}
+#logo {
+    width: 300px;
+    height: 300px;
+}
+h1 {
+    font-family: poppins;
+}
+#input-field {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+button {
+    padding: 2px 10px;
+}
+#country-info {
+    background-color: white;
+    padding: 20px;
+    margin: 50px 100px;
+    border-radius: 8px;
+    font-family: "Courier New";
+}
+.flag {
+    width: 60px;
+    height: 40px;
+    margin-right: 50px;
+}
+.countryname {
+    font-weight: bold;
+    font-size: 34px;
+}
+.country-div {
+    border-top: solid 1px #000;
+    padding-top: 30px;
+    margin-top: 20px;
+    font-family: poppins;
 }

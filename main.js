@@ -4,22 +4,22 @@
 //Maak op basis van de response de volgende string en log dit in de console:
 // [country-naam] is situated in [subarea-name]. It has a population of [amount] people.
 //Maak op basis van de response de volgende string en log dit in de console: The capital is [city]
-
+const countryInfo = document.getElementById('country-info')
 
 async function fetchData() {
 
     try {
-        const country = 'cuba'
+        const country = 'Belgium'
         const result = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`);
         const response = result.data
         const countries = response[0]
         // console.log(response)
-        // console.log(countries)
-        const { name, capital, subregion, population, currencies, languages } = countries
-        // console.log(name, capital, subregion, population, currencies)
+        console.log(countries)
+        const { name, capital, subregion, population, currencies, languages, flag } = countries
+        console.log(name, capital, subregion, population, currencies, flag)
         const infoString = `${name} is situated in ${subregion}. It has a population of ${population} people.`
         const capitalString = `The capital is ${capital}`;
-        console.log(currencies)
+        // console.log(currencies)
         console.log(infoString)
         console.log(capitalString)
         // console.log(languages)
@@ -31,11 +31,37 @@ async function fetchData() {
         // console.log(languageFunction)
         const languageString = `They speak ${languageFunction}.`
         console.log(languageString)
+
+        const image = document.createElement('img')
+        const countryName = document.createElement('span')
+        const countryDiv = document.createElement('p')
+        image.setAttribute('class', 'flag')
+        countryDiv.setAttribute('class', 'country-div')
+        countryDiv.textContent = `${infoString}\n${capitalString} ${currencyString}\n${languageString}`;
+        countryDiv.setAttribute('style', 'white-space: pre;');
+        countryName.setAttribute('class', 'countryname')
+        countryName.textContent = name;
+        image.src = flag
+        countryInfo.appendChild(image)
+        countryInfo.appendChild(countryName)
+        countryInfo.appendChild(countryDiv)
     } catch(e) {
         console.error(e);
     }
 }
 fetchData();
+
+//Zorg ervoor dat de opgehaalde data op de volgende manier wordt toegevoegd aan de DOM:
+//
+// [IMAGE: flag]
+// [country-name]
+// [country-naam] is situated in [subarea-name]. It has a population of [amount] people.
+// The capital is [city] and you can pay with [currency]'s
+// They speak [language], [language] and [language]
+
+
+
+
 
 //Maak een functie die ongeacht het aantal currencies die in een land gebruikt worden, een string maakt. In een land kunnen één of twee currencies gebruikt worden:
 //
