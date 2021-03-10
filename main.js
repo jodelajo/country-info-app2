@@ -5,62 +5,46 @@
 // [country-naam] is situated in [subarea-name]. It has a population of [amount] people.
 //Maak op basis van de response de volgende string en log dit in de console: The capital is [city]
 const countryInfo = document.getElementById('country-info')
-
+const pushButton = document.getElementById('country-button')
+pushButton.addEventListener('click', fetchData)
+const searchCountry = document.getElementById("country-input");
+searchCountry.addEventListener('keypress', countryInput);
+const infoContainer = document.getElementById('country-info')
 async function fetchData() {
-
     try {
-        const country = 'Belgium'
+        const inputElement = document.getElementById('country-input')
+        let country = inputElement.value;
         const result = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`);
         const response = result.data
         const countries = response[0]
-        // console.log(response)
         console.log(countries)
         const { name, capital, subregion, population, currencies, languages, flag } = countries
-        console.log(name, capital, subregion, population, currencies, flag)
         const infoString = `${name} is situated in ${subregion}. It has a population of ${population} people.`
         const capitalString = `The capital is ${capital}`;
-        // console.log(currencies)
-        console.log(infoString)
-        console.log(capitalString)
-        // console.log(languages)
         const currencyFunction = getCurrency(currencies)
-        // console.log(currencyFunction)
         const currencyString = `and you can pay with ${currencyFunction}'s.`
-        console.log(currencyString)
         const languageFunction = getLanguage(languages)
-        // console.log(languageFunction)
         const languageString = `They speak ${languageFunction}.`
-        console.log(languageString)
-
         const image = document.createElement('img')
         const countryName = document.createElement('span')
         const countryDiv = document.createElement('p')
+        //DOM
         image.setAttribute('class', 'flag')
         countryDiv.setAttribute('class', 'country-div')
         countryDiv.textContent = `${infoString}\n${capitalString} ${currencyString}\n${languageString}`;
         countryDiv.setAttribute('style', 'white-space: pre;');
-        countryName.setAttribute('class', 'countryname')
+        countryName.setAttribute('class', 'country-name')
         countryName.textContent = name;
         image.src = flag
         countryInfo.appendChild(image)
         countryInfo.appendChild(countryName)
         countryInfo.appendChild(countryDiv)
+        searchCountry.value = "";
+        // removeChilderen(infoContainer)
     } catch(e) {
         console.error(e);
     }
 }
-fetchData();
-
-//Zorg ervoor dat de opgehaalde data op de volgende manier wordt toegevoegd aan de DOM:
-//
-// [IMAGE: flag]
-// [country-name]
-// [country-naam] is situated in [subarea-name]. It has a population of [amount] people.
-// The capital is [city] and you can pay with [currency]'s
-// They speak [language], [language] and [language]
-
-
-
 
 
 //Maak een functie die ongeacht het aantal currencies die in een land gebruikt worden, een string maakt. In een land kunnen één of twee currencies gebruikt worden:
@@ -102,4 +86,16 @@ function getLanguage(languageArray){
         }
     }
     return total
+}
+
+function countryInput(event) {
+    if (event.code === "Enter") {
+        fetchData()
+    }
+}
+
+function removeChilderen(node) {
+    while (node.firstChild) {
+        node.removeChild(node.lastChild)
+    }
 }
